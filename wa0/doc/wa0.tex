@@ -1,0 +1,341 @@
+\documentclass[12pt,article]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2cm, right=2cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mdframed}
+\usepackage{changepage}   % for the adjustwidth environment
+\usepackage{forest} 
+\usepackage{tikz}   % For graph
+
+\usepackage{float}  % To inforce inserting images at the right place
+
+
+\newcommand{\Tau}{\mathrm{T}}
+
+
+% For matrix
+\def\horzbar{\text{magic}}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+\newcommand\projnumber{0}
+\newcommand\course{CS534}
+\newcommand\OSUID{934370552}
+\newcommand\Email{buivy@oregonstate.edu}
+\newcommand\Name{Vy Bui}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{Homework Assignment \projnumber}
+\rhead{Sept. 29, 2022}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+   
+
+% Make Rightarrow with superscript
+\makeatletter
+\newcommand{\xRightarrow}[2][]{\ext@arrow 0359\Rightarrowfill@{#1}{#2}}
+\makeatother
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{4cm}
+
+        \textbf{\Large CS534 - Machine Learning}
+
+        \vspace{0.5cm}
+ 
+        \textbf{\Large Homework Assignment \projnumber{}}
+ 
+        \vspace{1cm}
+
+        Author: Vy Bui
+
+        OSUID: 934370552 \\ 
+        
+        Email: buivy@oregonstate.edu
+
+        \vfill
+             
+        \vspace{0.8cm}
+      
+             
+        The School of Electrical Engineering and Computer Science\\
+        Oregon State University\\
+             
+    \end{center}
+\end{titlepage}
+
+%==============================================================================%
+\newpage
+\section*{Linear Algebra}
+\textbf{(1a)} The product is not defined because the neighboring dimensions do 
+not match.
+
+\textbf{(1b)} 
+\begin{align*}
+    \left[\begin{array}{ccc}
+        1 & 2 & 3 \\
+        4 & 5 & 6 \\
+        7 & 8 & 9 \\
+    \end{array}\right]
+    \begin{bmatrix}
+        1 & 1 & 0 \\
+        0 & 1 & 1 \\
+        1 & 0 & 1 \\
+    \end{bmatrix}
+    {} &=
+    \begin{bmatrix}
+        1\times1 + 2\times0 + 3\times1 & 1\times1 + 2\times1 + 3\times0 & 1\times0 + 2\times1 + 3\times1 \\
+        4\times1 + 5\times0 6\times1 & 4\times1 + 5\times1 + 6\times0 & 4\times0 + 5\times1 + 6\times1 \\
+        7\times1 + 8\times0 + 9\times1 & 7\times1 + 8\times1 + 9\times0 & 7\times0 + 8\times1 + 9\times1 \\
+    \end{bmatrix}
+    \\ {} &=
+    \begin{bmatrix}
+        4 & 3 & 5 \\
+        10 & 9 & 11 \\
+        16 & 15 & 17 \\
+    \end{bmatrix}
+\end{align*}
+
+\textbf{(1c)}
+\begin{align*}
+    \left[\begin{array}{cccc}
+        1 & 2 & 1 & 2 \\
+        4 & 1 & -1 & -4 \\
+    \end{array}\right]
+    \begin{bmatrix}
+        0 & 3 \\
+        1 & -1 \\
+        2 & 1 \\
+        5 & 2 \\
+    \end{bmatrix}
+    {} &=
+    \begin{bmatrix}
+        1\times0 + 2\times1 + 1\times2 + 2\times5 & 1\times3 + 2\times(-1) + 1\times1 + 2\times2\\
+        4\times0 + 1\times1 - 1\times2 - 4\times5& 4\times3 + 1\times(-1) - 1\times1 - 4\times2\\
+    \end{bmatrix}
+    \\ {} &=
+    \begin{bmatrix}
+        14 & 6 \\
+        -21 & 2 \\
+    \end{bmatrix}
+\end{align*}
+
+\textbf{(2a)} \newline
+\begin{align*}
+A =     
+    \begin{bmatrix}
+        1 & 1 & -1 & -1 \\
+        2 & 5 & -7 & -5 \\
+        2 & -1 & 1 & 3 \\
+        5 & 2 & -4 & -2 \\
+    \end{bmatrix}
+\end{align*}
+
+\begin{align*}
+    b =     
+        \begin{bmatrix}
+            1  \\
+            -2  \\
+            4 \\
+            6  \\
+        \end{bmatrix}
+    \end{align*}
+
+\textbf{(2b)}
+Because $A$ is a square matrix and $det(A) \neq 0$, $A$ is nonsingular, 
+therefore invertible. And because $A$ is nonsingular, 
+
+\begin{align*}
+    A^{-1} = 
+    \begin{bmatrix}
+        0.5     & -0.167    & 0     & 0.167 \\
+        2       & 0.167     & 0.5   & -0.667 \\
+        1.75    & -0.25     & 0     & -0.25 \\
+        -0.25   & 0.25      & 0.5   & -0.25 \\
+    \end{bmatrix}
+\end{align*}
+
+\begin{align*}
+x = A^{-1}b =
+    \left[\begin{array}{cccc}
+        0.5     & -0.167    & 0     & 0.167 \\
+        2       & 0.167     & 0.5   & -0.667 \\
+        1.75    & -0.25     & 0     & -0.25 \\
+        -0.25   & 0.25      & 0.5   & -0.25 \\
+    \end{array}\right]
+    \begin{bmatrix}
+        1 \\
+        -2 \\
+        4 \\
+        6 \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        1.83  \\
+        -0.33  \\
+        0.75 \\
+        -0.25  \\
+    \end{bmatrix}
+\end{align*}
+
+%==============================================================================%
+\newpage
+\section*{Vector Calculus}
+\textbf{(1a)} \newline
+Let $g(x) = 1 + e^{-x}$ and $h(g) = g^{-1}$, then we have $f(x) = h(g(x))$.
+
+$f'(x) = h'(g)g'(x) = (-g^{-2})g'(x) = -\frac{1}{(1 + e^{-x})^2} (-e^{-x}) = 
+    \frac{1}{1 + e^{-x}} (1 - \frac{1}{1 + e^{-x}}) = \sigma(x)(1 - \sigma(x))$
+
+\textbf{(1b)} \newline
+$f'(x) = e^{-\frac{(x - \mu)^2}{2\sigma^2}} (-\frac{2(x - \mu)}{2\sigma^2})
+= \frac{\mu - x}{\sigma^2 e^{\frac{(x - \mu)^2}{2\sigma^2}}}$
+
+\textbf{(2a)} \newline
+
+We have 
+\begin{align*}
+z = x^Tx =
+    \left[\begin{array}{cccc}
+        x_1 & x_2 & ... & x_D \\
+    \end{array}\right]
+    \begin{bmatrix}
+        x_1     \\
+        x_2     \\
+        \vdots  \\
+        x_D     \\
+    \end{bmatrix}
+= x_1^2 + x_2^2 + ... + x_D^2
+\end{align*}
+
+Applying chain rule results in 
+
+$\nabla_xf = \frac{\partial f}{\partial x} = \frac{\partial f}{\partial z} 
+\frac{\partial z}{\partial x} = \frac{1}{1 + z} $
+
+$
+\begin{bmatrix}
+    \frac{\partial z(x)}{\partial x_1} & \frac{\partial z(x)}{\partial x_x} & ... & \frac{\partial z(x)}{\partial x_D} \\
+\end{bmatrix}
+= \frac{1}{1 + x_1^2 + x_2^2 + ... + x_D^2} 
+\begin{bmatrix}
+    2x_1 & 2x_2 & ... & 2x_D \\
+\end{bmatrix}
+$
+
+Because $z = x^Tx$ is a scalar, $f(z(\textbf{x}))$ is also a scalar. In other 
+words, $\textbf{f} : R^D \rightarrow R^1$ maps vector \textbf{x} to a scalar. 
+Therefore, the gradient of $f$ with respect to \textbf{x} is a $1 \times D$ 
+matrix, which can also be seen as the result of the gradient above.
+
+\textbf{(2b)}
+According to chain rule, we have 
+
+$\nabla_xf = \frac{\partial f}{\partial x} = \frac{\partial f}{\partial z} 
+\frac{\partial z}{\partial x}$ \tab[1cm] (1)
+
+We also have 
+$\frac{\partial f}{\partial z} = -\frac{1}{2e^{z/2}}$ \tab[1cm] (2)
+
+Because $S$ is a symmetric matrix, $S^{-1}$ is also a symmetric matrix, which 
+enables us to apply formula (85) in the matrix cookbook as following
+
+$\frac{\partial z}{\partial x} 
+= \frac{\partial }{\partial x}(\textbf{x} - \textbf{$\mu$})^TS^{-1}(\textbf{x} - \textbf{$\mu$})
+= 2S^{-1}(\textbf{x} - \textbf{$\mu$}) \tab[1cm] (3)
+$
+
+$(1),(2),(3) \rightarrow \nabla_xf = -\frac{S^{-1}(\textbf{x} - \textbf{$\mu$})}{e^{z/2}}$
+
+%==============================================================================%
+\newpage
+\section*{Probability}
+\textbf{(1a)} \newline
+Let the sample space $\Omega = \{Fair,Unfair\}$, target space 
+$\Tau = \{T,F\}$ denoting whether the picked coin is fair or not, and random 
+variable $X : \Omega \rightarrow \Tau$.
+
+Assume that the difference between two coins is so small and cannot be 
+recognized, then $P(X = T) = P(Fair) = 0.5$.
+
+\textbf{(1b)} \newline
+Let us define a sample space $\Omega = \{HH,HT,TH,TT\}$ denoting the outcome of 
+two tosses. 
+The event we are interested in is whether the first toss is head or not. Let us 
+define a random variable $Y$ that maps $\Omega$ to $\Tau = \{H,T\}$, which denotes 
+the result of the first toss.
+
+$P(Y = H) = P(Y = H | X = F) + P(Y = H | X = T)$ \newline
+$= P_F(H)P(X = T) + P_U(H)P(X = F) = 0.5 \times 0.5 + 0.1 \times 0.5 = 0.3$
+
+\textbf{(1c)} \newline
+Applying Bayes's theorem, we have
+$P(X = T, HH) = \frac{P(HH | X = T)P(X = T)}{P(HH | X = T)P(X = T) + P(HH | X = F)P(X = F)} 
+= \frac{(0.5 \times 0.5) \times 0.5}{(0.5 \times 0.5) \times 0.5 + 0.1 \times 0.1 \times 0.5} \approxeq 0.962$
+
+\textbf{(2a)} \newline
+By convention, $p(x) = 1$ and $p(y) = 1$ for discrete random variables with a 
+finite number of events.
+
+\textbf{(2b)} \newline
+$p(x|Y = y_1) = 0.01 + 0.02 + 0.03 + 0.1 + 0.1 = 0.26$
+
+$p(y|X = x_3) = 0.03 + 0.05 + 0.03 = 0.11$
+
+\textbf{(3a)} \newline
+The likelihood function can be written as
+$\Pi_{i=1}^nf(x_i;0,\theta) = \Pi_{i=1}^n\frac{1}{\theta - 0} = \frac{1}{\theta^n}$
+
+\textbf{(3a)} \newline
+Because the likelihood function is a decreasing function of $\theta$, the 
+estimate is smallest when $\theta$ is largest, that is the MLE of $\theta$, $\hat{\theta} = max(x_1, x_2,...,x_n)$.
+
+\textbf{(4a)} \newline
+The cost of filtering the mail out is cost of incorrectly predict it as spam; 
+$Cost = 10 \times (1 - P) + 0 \times P = 10 \times 0.2 = 2$.
+
+\textbf{(4b)} \newline
+The cost of not filtering out the email is cost = $0 \times 0.2 + 1 * 0.8 = 0.8$.
+
+Because it is cheaper not to filter out the email, choose to label the mail as 
+non-spam.
+
+\textbf{(4c)} \newline
+Applying the threshold will make the cost of filtering out $= 10 \times (1 - \theta)$, 
+and the cost of not filtering out $= 1 \times \theta$. The threshold should 
+balance of these two costs, that is 
+
+$\theta = 10 \times (1 - \theta) \rightarrow \theta = 10/11$. 
+
+By doing so, we embed the difference in cost of these two decisions in $\theta$. 
+The result aligns with our observation from 4a and 4b when false negative cost is 
+cheaper than that of false positive. Increasing threshold helps decrease false positive, 
+which in turn reduces false positive cost.
+
+\end{document}
