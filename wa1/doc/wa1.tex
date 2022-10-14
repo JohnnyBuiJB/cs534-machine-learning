@@ -1,0 +1,182 @@
+\documentclass[12pt,article]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2cm, right=2cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mdframed}
+\usepackage{changepage}   % for the adjustwidth environment
+\usepackage{forest} 
+\usepackage{tikz}   % For graph
+
+\usepackage{float}  % To inforce inserting images at the right place
+
+
+\newcommand{\Tau}{\mathrm{T}}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% For matrix
+\def\horzbar{\text{magic}}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+\newcommand\projnumber{1}
+\newcommand\course{CS534}
+\newcommand\OSUID{934370552}
+\newcommand\Email{buivy@oregonstate.edu}
+\newcommand\Name{Vy Bui}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{Homework Assignment \projnumber}
+\rhead{Oct. 14, 2022}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+   
+
+% Make Rightarrow with superscript
+\makeatletter
+\newcommand{\xRightarrow}[2][]{\ext@arrow 0359\Rightarrowfill@{#1}{#2}}
+\makeatother
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{4cm}
+
+        \textbf{\Large CS534 - Machine Learning}
+
+        \vspace{0.5cm}
+ 
+        \textbf{\Large Written Homework Assignment \projnumber{}}
+ 
+        \vspace{1cm}
+
+        Author: Vy Bui
+
+        OSUID: 934370552 \\ 
+        
+        Email: buivy@oregonstate.edu
+
+        \vfill
+             
+        \vspace{0.8cm}
+      
+             
+        The School of Electrical Engineering and Computer Science\\
+        Oregon State University\\
+             
+    \end{center}
+\end{titlepage}
+
+%==============================================================================%
+\begin{problem}{1}
+\textbf{[10pts]}
+\end{problem}
+
+\textbf{(a)} The log likelihood function of \textbf{w} is 
+
+$$l(w) = log\prod_{i=1}^{N} P(y_i | \mathbf{x_i; w})$$
+
+\textbf{(b)} \newline
+First, maximizing the log likelihood function is equivalent to minimizing the 
+negative log likelihood function.
+
+$$\argmax_{w} log(w) = \argmin_{w} -log(w) 
+= \argmin_{w} -log\prod_{i=1}^{N} P(y_i | \mathbf{x_i; w})
+= \argmin_{w} -\sum_{i=1}^{N} log p(y_i | \mathbf{x_i; w}) \tab[0.5cm] (1)$$
+
+Because the likelyhood is Gaussian,
+$$log p(y_i | \mathbf{x_i; w}) = -\frac{(y_i - \mathbf{x_i^Tw})^2}{2\sigma^2} + const \tab[1cm] (2)$$
+
+where the const consists of all terms independent of $\mathbf{w}$.
+
+Substituting (2) to (1) and droping const results in
+
+$$\argmax_{w} log(w) 
+= \argmin_{w} -\sum_{i=1}^{N} log p(y_i | \mathbf{x_i; w})
+= \argmin_{w} \sum_{i=1}^{N} \frac{(y_i - \mathbf{x_i^T w})^2}{2\sigma^2}
+$$
+
+$$
+= \frac{1}{2} \sum_{i=1}^{N} a_i (\mathbf{w^T x_i} - y_i)^2, a_i = \frac{1}{\sigma^2} \tab[1cm] (3)
+$$ 
+
+\textbf{(c)}
+The gradient of $L(\mathbf{w})$ can be computed as following
+
+$$
+\nabla L(w) = \frac{1}{\sigma^2} \sum_{i=1}^{N} (\mathbf{w^T x_i} - y_i) \mathbf{x_i}
+$$
+
+Because the gradient points in the direction of steepest ascent, we need to 
+go in the opposite direction to reach the minimum, one step at a time. Hence, 
+the update rule is 
+
+$$
+\mathbf{w \leftarrow w} - \gamma \nabla L(w) = \mathbf{w} - \frac{1}{\sigma^2} \sum_{i=1}^{N} (\mathbf{w^T x_i} - y_i) \mathbf{x_i}
+$$
+
+\textbf{(d)}
+Because (3) is a quadratic function of \textbf{w}, we can compute the global 
+optimum by setting its gradient to 0 and solve for \textbf{w}.
+
+$$
+\frac{\ l}{\partial \mathbf{w}} 
+= \frac{1}{2\sigma^2} \frac{d}{d\mathbf{w}} (\mathbf{(y - xw)^T (y - xw)})
+= \frac{1}{2\sigma^2} \frac{d}{d\mathbf{w}} (\mathbf{(y^Ty -2y^Txw + w^Tx^Txw)})
+$$
+
+$$
+= \frac{1}{2\sigma^2} \frac{d}{d\mathbf{w}} (\mathbf{(-y^TX + w^Tx^Tx)}) \tab[1cm] (4)
+$$
+
+Setting (4) to 0 results in
+
+$$
+\mathbf{w_{op}^Tx^Tx = y^TX}
+\Leftrightarrow
+\mathbf{w_{op}^T = y^Tx(x^Tx)^{-1}}
+\Leftrightarrow
+\mathbf{w_{op} = (x^Tx)^{-1}x^Ty}
+$$
+
+%==============================================================================%
+\newpage
+\begin{problem}{2}
+\textbf{[10pts]}
+\end{problem}
+
+\textbf{(a)}
+
+%==============================================================================%
+\newpage
+\begin{problem}{3}
+\textbf{[10pts]}
+\end{problem}
+
+\textbf{(a)}
+\end{document}
