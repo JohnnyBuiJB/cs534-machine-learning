@@ -170,7 +170,48 @@ $$
 \textbf{[10pts]}
 \end{problem}
 
-\textbf{(a)}
+\textbf{(a)} Compute the log-likelihood function \newline
+$$
+l(w) = log L(w) = \sum_{i=1}^{N} \sum_{k=1}^{K} log(p(y = k| x_i)^{y_{ik}})
+= \sum_{i=1}^{N} \sum_{k=1}^{K} log(\frac{e^{\mathbf{w_k^T x_i}}}{\sum_{j=1}^{K} e^{\mathbf{w_j^T x_i}}}) ^ {y_{ik}}
+$$
+
+\textbf{(b)} Compute the gradient of the log-likelihood function with regard to 
+the weight vector $\mathbf{w}_c$ of class c.
+
+First, the function can be simplified as follows
+
+$$
+l(w) = \sum_{i=1}^{N} \sum_{k=1}^{K} log(\frac{e^{\mathbf{w_k^T x_i}}}{\sum_{j=1}^{K} e^{\mathbf{w_j^T x_i}}}) ^ {y_{ik}}
+= \sum_{i=1}^{N} \sum_{k=1}^{K} y_{ik} log(\frac{e^{\mathbf{w_k^T x_i}}}{\sum_{j=1}^{K} e^{\mathbf{w_j^T x_i}}})
+$$
+
+$$
+= \sum_{i=1}^{N} \sum_{k=1}^{K} y_{ik} (\mathbf{w_k^T x_i} - log \sum_{j=1}^{K} e^{\mathbf{w_j^T x_i}})
+= \sum_{i=1}^{N} (\sum_{k=1}^{K} y_{ik} \mathbf{w_k^T x_i} - \sum_{k=1}^{K}( y_{ik} log \sum_{j=1}^{K} e^{\mathbf{w_j^T x_i}}))
+$$
+
+$$
+= \sum_{i=1}^{N} (\sum_{k=1}^{K} y_{ik} \mathbf{w_k^T x_i} - log \sum_{j=1}^{K} e^{\mathbf{w_j^T x_i}})
+$$
+
+Now it is easier to calculate the gradient as follows
+
+$$
+\nabla_{w_{ch}} l(w) = \frac{\partial}{\partial w_{ch}} (\sum_{i=1}^{N} (\sum_{k=1}^{K} y_{ik} \mathbf{w_k^T x_i} - log \sum_{j=1}^{K} e^{\mathbf{w_j^T x_i}}))
+= \sum_{i=1}^{N} (y_{ic} x_i^h - \frac{x_i^h e^{\mathbf{w_c^T x_i}}}{\sum_{j=1}^{K} e^{\mathbf{w_j^T x_i}}})
+$$
+
+$$
+= \sum_{i=1}^{N} x_i^h (y_{ic} - \frac{e^{\mathbf{w_c^T x_i}}}{\sum_{j=1}^{K} e^{\mathbf{w_j^T x_i}}})
+$$
+
+where $h = 0,1,2,...,n$ and $c = 0,1,2,...,k$.
+
+Therefore, the gradient with regard to vector $w_c$ is
+$$
+\nabla_{w_c} l(w) = \sum_{i=1}^{N} x_i (y_{ic} - P(y_i = c|x_i;w))
+$$
 
 %==============================================================================%
 \newpage
@@ -178,5 +219,49 @@ $$
 \textbf{[10pts]}
 \end{problem}
 
-\textbf{(a)}
+\textbf{(a)} Derive the posterior distribution $p(\hat{\theta} | X_1,...,X_n,\alpha,\beta)$
+and show that it is also a Beta distribution.
+
+First, the likelihood function can be computed as follows
+
+$$
+p(X_1,...,X_n | \hat{\theta}) = \prod_{i=1}^{n} \hat{\theta}^{x_i} (1 - \hat{\theta})^{1 - x_i} 
+= \hat{\theta}^{\sum x_i} (1 - \hat{\theta})^{n - \sum x_i}
+$$
+
+Then, the posterior of $\hat{\theta} | X_1,...,X_n$ is 
+
+$$
+p(\hat{\theta} | X_1,...,X_n,\alpha,\beta) \propto p(X_1,...,X_n,\alpha,\beta| \hat{\theta}) p(\hat{\theta})
+$$
+
+$$
+= \hat{\theta}^{\sum x_i} (1 - \hat{\theta})^{n - \sum x_i} \frac{\hat{\theta}^{\alpha - 1}(1 - \hat{\theta})^{\beta - 1}}{B(\alpha,\beta)}
+= \frac{\hat{\theta}^{\alpha + \sum x_i} (1 - \hat{\theta})^{\beta + n - \sum x_i}}{B(\alpha,\beta)}
+$$
+
+$$
+= Beta(\hat{\theta} | \alpha + \sum x_i, \beta + n - \sum x_i) 
+$$
+
+\textbf{(b)}
+For the case of observing 2 heads out of 5 tosses, the posterior distribution 
+of $\theta$ can be calculated as follows
+
+$$Beta(\theta | 2 + 2, 2 + 5 - 2) = Beta(\theta | 4, 5)$$
+
+That for the case of observing 20 heads out of 50 tosses is 
+
+$$Beta(\theta | 2 + 20, 2 + 50 - 20) = Beta(\theta | 22, 32)$$
+
+
+\begin{center}
+    \includegraphics[scale=0.6]{3b.png}
+    
+    Figure 1: The posterior distributions of $\theta$
+\end{center}
+
+The posterior distribution's spread will get smaller and smaller, centered at 
+$\theta = 0.4$.
+
 \end{document}
