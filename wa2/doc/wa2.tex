@@ -132,7 +132,13 @@ small constant $\alpha$, which effectively reduces the bound on $|\x|$ to
 $D' =\alpha D$, we can reduce the upper bound to $(\alpha \frac{D}{\gamma})^2$. 
 Is this argument correct? Why? 
 
-\answer{Put your solution here.}
+\answer{
+This argument is incorrect. Because the scaler $\alpha$ not only affects "the 
+radius of data" $D$, but also affects the maximum margin $\gamma$, which is the 
+distance between the separating hyperplane to the closest $x_i$. As a result, 
+the upper bound of the number of steps becomes $(\frac{\alpha D}{\beta \gamma})^2$, 
+where $\beta$ is the effect of scaling $x$ on $\gamma$.
+}
 
 \item (Kernel or not). (9 pts) In the following problems, suppose that $K$, 
 $K_1$ and $K_2$ are kernels with feature maps $\phi$, $\phi_1$ and $\phi_2$. 
