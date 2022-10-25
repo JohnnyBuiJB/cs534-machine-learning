@@ -109,7 +109,20 @@ ${\bf g}=[g_1, g_2, ...,g_d]^T$ is a subgradient of $f(\x)$ at $\x={\bf 0}$ if
 every $g_i \in [-1,1] $ using the definition of subgradient: $g$ is a subgradient of $f(x)$ at $x_0$ if $\forall x$, $f(x)\geq f(x_0)+g^T(x-x_0)$
 
 \answer{
+Let $z = x_0 = 0$ to avoid notation confusion. First, let us consider the right 
+side of the inequality $R$. $f(z) = 0$ because $z_i = 0, i \in [1,d]$, hence the 
+right side reduces to 
 
+$$
+R = \mathbf{0} + \mathbf{g}^T (\mathbf{x - z}) = g_1x_1 + g_2x_2 + ... + g_dx_d
+$$
+
+The left side can be calculated as follows
+$$f(x) = |x_1| + |x_2| + ... + |x_d|$$
+
+Because $g_i \in [-1,1]$, $g_ix_i \leq |x_i|$ for $i = 1...d$, therefore 
+$f(x) \geq f(z) + \mathbf{g}^T (\mathbf{x - z})$, which shows that $g$ is a 
+subgradient of $f(x)$ at $x = 0$.
 }
 
 \item (Perceptron) (2 pts) Consider the following argument. We know that the 
