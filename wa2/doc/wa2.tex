@@ -68,6 +68,9 @@
 \def\x{{\bf x}}
 \def\w{{\bf w}}
 
+\newcommand{\Lagr}{\mathcal{L}}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
 \begin{document}
 
 \begin{titlepage}
@@ -148,24 +151,27 @@ $\phi_1$ and $\phi_2$. If they are not kernels, prove that they are not.
 
 \begin{itemize}
 \item (2 pts) $K'(\x, \z) = cK(\x, \z)$ for $c > 0$.\\
-\answer{Put your solution here.
+\answer{This is a valid kernel with the corresponding $\phi' = \sqrt{c}\phi$
 }
 \item (2 pts) $K'(\x,\z) = cK(\x, \z)$ for $c < 0$.\\
-\answer{Put your solution here.}
+\answer{This is not a valid kernel because $\phi' = \sqrt{c}\phi$ is not defined 
+when $c < 0$}.
 \item (2 pts) $K'(\x,\z)= c_1K_1(\x, \z)+c_2K_2(\x,\z)$ for $c_1, c_2 >0$.\\
-\answer{Put your solution here.}
+\answer{This is a valid kernel with the corresponding $\phi = \sqrt{c_1}\phi_1 + \sqrt{c_2}\phi_2$}
 \item (3 pts) $K'(\x,\z)= K_1(\x, \z)K_2(\x,\z)$ .\\
-\answer{Put your solution here.
+\answer{This is a valid kernel with the corresponding $\phi = \phi_1\phi_2$
 }
 
 \end{itemize}
+
+\newpage
 \item (Hard margin SVM) (5 pts) Apply linear SVM without soft margin to the 
 following problem.
-\begin{center}
-\begin{figure}[h]
-\includegraphics[width=3in]{svm.pdf}
-\end{figure}
-\end{center}
+% \begin{center}
+% \begin{figure}[h]
+% \includegraphics[width=3in]{svm.pdf}
+% \end{figure}
+% \end{center}
 
 \begin{itemize} \item[a.] (2pts) Please mark out the support vectors, the 
 decision boundary ($w_1x_1+w_2x_2 +b =0$) and $w_1x_1+w_2x_2+b =1$ and 
@@ -173,13 +179,33 @@ $w_1x_1+w_2x_2+b =-1$. You don't need to solve the optimization problem for
 this, you should be able to eyeball the solution and find the linear separator 
 with the largest margin.
 
-\answer{Put your solution here.
+\answer{
+As shown in the following figure, the black line $x_1 = 1.5$ is the linear 
+separator with the largest margin equal 0.5. The support vectors are the points 
+through which the green lines $x_1 = 1$ and $x_1 = 2$ go.
+
+\includegraphics[scale=0.5]{q4a_1.png}
+
+Any change in the slope of the linear separator will decrease the margin, as 
+shown in the following figure.
+
+\includegraphics[scale=0.5]{q4a_2.png}
 }
 \item[b.] (3 pts) Please solve for $w_1, w_2$ and $b$ based on the support 
 vectors you identified in (a). Hint: the support vectors would have functional 
 margin = 1. \\
 \answer{
-Put your solution here.}
+The functional margin for data point (1.5,0) on the decision boundary, support 
+vectors (1,1) and (1,2) can be calculated as follows
+
+$1.5w_1 + b = 0$
+
+$w_1 + w_2 + b = 1$
+
+$2w_1 + w_2 + b = -1$
+
+Solving this linear system results in $w_1 = -2, w_2 = 0, b = 3$.
+}
 \end{itemize}
 \item $L_2$ SVM (10 pts) \\
 Given a set of training examples $\{(\x_i, y_i)\}_{i=1}^N$, where 
@@ -200,14 +226,58 @@ ${\bf \xi}_i^* \geq 0$, $\forall i\in\{1,\cdots,N\} $.
 ( Hint: use proof by contradiction by assuming that there exists 
 some $\xi_i^*<0$.)\\
 
-\answer{Put your solution here.}
+\answer{
+Assume that there exists some optimal solution $(\mathbf{w}^*,b^*,\mathbf{\xi}^*)$ 
+with $\xi_i^*<0, \forall i \in \{1,...,N\}$. Then the solution 
+$(\mathbf{w}^*,b^*,\mathbf{0})$ will also satisfy the constraint 
+$y_i(\w^T\x_i+b)\geq 1-\xi_i \mbox{}$ and make the objective function smaller. 
+This contradicts with the assumption that the solution is optimal, therefore, 
+there exists no optimal solution with $\xi_i^*<0, \forall i \in \{1,...,N\}$. 
+Hence, removing it from the list of constraints does not change the solution to 
+the problem.
+}
+
 \item [b.] (2 pts) After removing the second set of constraints, we have a 
 simpler problem with only one set of constraints. Now provide the lagrangian of 
 this new problem.\\
-\answer{Put your solution here.}
+\answer{
+$$
+\Lagr(w,b,\alpha,\xi) = \frac{1}{2}\w^T\w+c\sum_{i=1}^N \xi_i^2 - 
+\sum_{i=1}^N \alpha_i[y_i(\w^T\x_i + b) - 1 + \xi_i]
+$$
+
+s.t. $\alpha_i \geq 0$ for $i = 1,...,m$.
+}
 \item [c.] (6pts) Derive the dual of this problem. How is it different from the 
 standard SVM with hinge loss? Which formulation is more sensitive to outliers?\\
-\answer{Put your solution here.
+\answer{
+Substituting $\w = \sum_{i=1}^N \alpha_i y_i \x_i $ into $\Lagr$ results in
+
+$$
+\Lagr(\alpha)
+= \frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N (\alpha_i y_i \x_i)^T (\alpha_j y_j \x_j) 
++ \sum_{i=1}^N \frac{\alpha_i}{\xi_i} \xi_i^2
+- \sum_{i=1}^N \alpha_i[y_i((\sum_{j=1}^N \alpha_j y_j \x_j)^T\x_i + b) - 1 + \xi_i]
+$$
+
+$$
+= 
+- \frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j \x_i^T \x_j
++ \sum_{i=1}^N \alpha_i \xi_i 
+- b \sum_{i=1}^N \alpha_i y_i
++ \sum_{i=1}^N \alpha_i
+- \sum_{i=1}^N \alpha_i \xi_i 
+$$
+
+$$
+= 
+\sum_{i=1}^N \alpha_i
+- \frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j \x_i^T \x_j
+$$
+
+The loss formulation for the dual problem is more sensitive to outliers because 
+the degrees of x and y in it are higher than those in the formulation of Hinge 
+loss.
 }
 
 \end{itemize}
@@ -228,17 +298,49 @@ A&B&C&Y\\ \hline
 all necessary probabilities (there should be 7 independent probabilities to be 
 estimated in total).
 
-\answer{Put your solution here.
+\answer{
+First, the prior can be calculated as $P(y=1) = 0.5$ and $P(y=0) = 0.5$.
+
+Second, the distribution of A,B,C given y can be computed as
+
+$P(A = 0| y = 1) = 1/3, P(A = 1| y = 1) = 2/3$
+
+$P(B = 0| y = 1) = 1/3, P(B = 1| y = 1) = 2/3$
+
+$P(C = 0| y = 1) = 2/3, P(C = 1| y = 1) = 1/3$
+
+Finally, 
+
+$P(A=1,B=0,C=0) = \sum_j(\prod_{i} P(x_i|y=j) P(y=j)) \newline
+= 0.5 \times 1/3 \times 1/3 \times 1/3 + 0.5 \times 2/3 \times 1/3 \times 2/3 
+= \frac{5}{54}$
 }
 \item (3 pts) Compute the probability $P(y=1|A=1, B=0, C=0)$.
 \answer{
-Put your solution here.}
+
+$P(y=1|A=1, B=0, C=0) = \frac{P(A=1,B=0,C=0|y=1) P(y=1)}{P(A=1,B=0,C=0)}
+= \frac{2/3 \times 1/3 \times 2/3 \times 0.5}{5/54} = \frac{4}{5}$
+}
 \item (1 pts) Suppose we know that the three features A, B and C are independent 
 from one another, can we say that the Naive Bayes assumption is valid? (Note 
 that the particular data set is irrelevant for this question). If your answer 
 is yes, please explain why; if you answer is no please give an counter example.
 
-\answer{Put your solution here.}
+\answer{
+The assumption is not valid because the independence of between A,B, and C is 
+not conditional independence, which is required for Naive Bayes assumption. 
+
+Counter example:
+
+Independence: \newline
+$P(A=0,B=0,C=0|y=1) = P(A=0)P(B=0)P(C=0) = 1/2 \times 2/6 \times 1/2 = 1/12$
+
+Conditional independence: \newline
+$P(A=0,B=0,C=0|y=1) = P(A=0|y=1)P(B=0|y=1)P(C=0|y=1)
+= 1/3 \times 1/3 \times 2/3 = 2/27$
+
+
+}
 
 \end{enumerate}
 
@@ -251,7 +353,57 @@ $y=1$ if $P(y=1|\x) > P(y=0|\x)$. This is equivalent to having a decision
 boundary defined by $\log\frac{P(y=1|\x)}{P(y=0|\x)}=0$.
 
 \answer{
-Put your solution here.}
+The classifier will predict $y=1$ if 
+$
+P(y=1|\x) \geq P(y=0|\x) \Leftrightarrow \frac{P(\x|y=1)P(y=1)}{P(\x|y=0)P(y=0)} \geq 1 \tab[0.5cm] (1)
+$
+
+Applying the naive Bayes assumption, we have 
+
+$$
+P(\x|y) = \prod_{i=0}^d P(x_i|y) \tab[0.5cm] (2)
+$$
+
+Plugging (2) into (1) results in 
+
+$$
+\frac{P(y=1)}{P(y=0)} \prod_{i=0}^d\frac{P(x_i|y=1)}{P(x_i|y=0)} \geq 1 \tab[0.5cm] (3)
+$$
+
+To simplify notation, let $P(y=1) = p$, $P(x_i=1|y=1) = k_i$, and $P(x_i=1|y=0) = m_i.$
+Because the features are binary, either 0 or 1, we can derive 
+$P(x_i|y=1) = k_i^{x_i}(1 - k_i)^{1 - x_i}$ and 
+$P(x_i|y=0) = m_i^{x_i}(1 - m_i)^{1 - x_i}$.
+
+Plugging these new notations to (3) we get
+
+$$
+\frac{p}{1-p} \prod_{i=1}^d \frac{k_i^{x_i}(1 - k_i)^{1 - x_i}}
+{m_i^{x_i}(1 - m_i)^{1 - x_i}} \geq 1
+$$
+
+$$
+\Leftrightarrow 
+(\frac{p}{1-p} \prod_{i=0}^d \frac{1-k_i}{1-m_i}) 
+\prod_{i=0}^d (\frac{k_i(1 - m_i)}{m_i (1 - k_i)})^{x_i} \geq 1
+$$
+
+$$
+\Leftrightarrow
+log(\frac{p}{1-p} \prod_{i=0}^d \frac{1-k_i}{1-m_i}) 
++ \sum_{i=0}^d x_i log(\frac{k_i(1 - m_i)}{m_i (1 - k_i)}) \geq 0 \tab[0.5cm] (4)
+$$
+
+Because the log term does not contain any $x_i$, it can be seen as a constant c. 
+The log inside of the summation is actually $w_i$. Hence, (4) becomes 
+
+$$
+c + \sum_{i=0}^d x_i w_i \geq 0
+$$
+
+This shows that the classifier learns a linear decision boundary with $w$ equal 
+to the log term in the summation in (4).
+}
 \end{enumerate}
 
 \end{document}
