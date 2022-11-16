@@ -86,20 +86,26 @@ AI534 --- Written Assignment 4 ---
 leaf of the tree is labeled with a letter.  Write this
 letter in the corresponding region of input space.\\
 
-\answer{Your answer here
+\answer{
 First, let us name the regions divided the boundaries as follows
 \begin{center}
     \includegraphics[scale=0.5]{q1a.png}    
 \end{center}
-}
 
 The areas covered by the letters are: \newline
 A: 1 + 2 \newline
-B: 3 + 4 \newline
+B: 3 \newline
 C: 5 \newline
-D: 6 + 7 + 8 \newline
+D: 6 + 7 \newline
 E: 4 \newline
 F: 8 \newline
+
+The decision boundaries are depicted as the colored lines in the following figure
+
+\begin{center}
+    \includegraphics[scale=0.5]{q1a_decision_boundary.png}    
+\end{center}
+}
 
 \item (2 pts) Give another decision tree that is syntactically
 different but defines the same decision boundaries.  This
@@ -107,10 +113,16 @@ demonstrates that the space of decision trees is
 syntactically redundant.  \\
 
 \answer{
-Your answer here} 
+\begin{center}
+    \includegraphics[scale=0.5]{q1b.png}
+\end{center}
+} 
 
 \item (2 pts) How does this redundancy influence learning (does it make it easier or harder to find an accurate tree)?\\
-\answer{Your answer here
+\answer{
+First, redundancy means that there are some trees having the same decision boundaries, and thus same performance (gini index or information gain) at the leaf nodes.
+
+Second, assuming that the greedy strategy is used for learning because finding the optimal partitioning of the data is an NP-complete problem. The greedy algorithm picks the best combination of feature and threshold (or category in the case of categorical features) for only one node at a time. The discussion boils down to how the algorithm breaks ties. If it breaks ties randomly then its complexity will remain the same regardless of the presence of the redundancy. If it looks ahead for smaller trees, then the complexity will increase by O(TD), where T is the number of ties and D is the maximum depth of the look ahead. The redundancy might create more ties at some nodes (not necessary), thus makes learning harder.
 }
 
 \end{enumerate}
