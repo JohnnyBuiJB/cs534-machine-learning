@@ -4,6 +4,9 @@
 \usepackage{epsf}
 \usepackage{xcolor}
 \usepackage{float}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
 \newtheorem{theorem}{Theorem}
 \setlength{\topmargin}{0.1in}
 \setlength{\oddsidemargin}{0in}
@@ -61,6 +64,10 @@
 
 \def\x{{\bf x}}
 \def\w{{\bf w}}
+
+\algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}%
+
+\newcommand\tab[1][1cm]{\hspace*{#1}}
 
 \begin{document}
 {\Large
@@ -223,11 +230,17 @@ Observe that all of the leaf nodes are either pure or empty. This means that $H(
 \[Sample=( - 2.2, -2.0, -0.3, 0.1, 0.2, 0.4, 1.6, 1.7, 1.9, 2.0)\]
 \begin{itemize}
 \item[a.] (2pts) Using single link.\\
-\answer{Your solution here
+\answer{
+\begin{center}
+    \includegraphics[scale=0.3]{q5a.png}
+\end{center}
 }
 
 \item[b.] (2pts) Using complete link \\
-\answer{Your solution here
+\answer{
+\begin{center}
+    \includegraphics[scale=0.3]{q5b.png}
+\end{center}
 }
 
 \end{itemize}
@@ -238,13 +251,24 @@ Consider replacing the distance function used for Kmeans with $L_1$ norm with th
 \[\min_{\mu_1,...,\mu_K,C_1,...,C_K}\sum_{i=1}^K \sum_{x\in C_i} |x-\mu_i|\]
 
 \begin{itemize}
-    \item (3 pts) Show that given fixed cluster assignment $C_1, ..., C_K$, the prototype $\mu_i$ that optimizes the above objective can be obtained by taking element-wise median of all the points in cluster $i$.
+\item (3 pts) Show that given fixed cluster assignment $C_1, ..., C_K$, the prototype $\mu_i$ that optimizes the above objective can be obtained by taking element-wise median of all the points in cluster $i$.
 
-    \answer{Your answer here
-    }
+\answer{
+For simplicity, suppose that we have a cluster of data in 1-dimensional space. First, the algorithm randomly picks the initial center $\mu$. The chosen center splits the data into parts, on its left (L) and on its right (R). Let us call the sum of distances between $\mu$ and all of the L data points $d_L$, that for R data points $d_R$, and the total distance $d = d_L + d_R$. When we move the center to the left an amount $x$, $d'_L = d_L - n_Lx$, $d'_R = d_R + n_Rx$, and $d' = d'_L + d'_R = d + x(n_R - n_L)$. It can be seen that $d$ is minimal when $n_R = n_L$, which makes the center the median of the data points.
+}
 
 \item  (3 pts) Modify the kmeans algorithm for this $L_1$ based objective.\\
-\answer{ Your answer goes here.}
+\answer{
+Randomly pick k points as centers
+
+Do \{
+
+$\tab[0.5cm]$ Assign data points to the cluster whose median is closest to them.
+
+$\tab[0.5cm]$ Re-estimate the centers of the clusters by calculating their medians.
+
+\} While (some data points changed membership)
+}
 \end{itemize}
 \end{enumerate}
 \end{document}
