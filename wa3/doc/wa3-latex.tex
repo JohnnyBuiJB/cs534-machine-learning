@@ -133,7 +133,9 @@ Second, assuming that the greedy strategy is used for learning because finding t
 decision tree could contain if it were trained on $m$ (distinct)
 training examples?
 
-\answer{Your answer here}
+\answer{
+In the worst case, every split will split one example from the rest. Hence, the algorithm will result in the full binary tree with the height of $m - 1$ and $2^{m - 1}$ leaf nodes.
+}
 
 \item (2 pts) What is the maximum number of leaf nodes that a decision
 tree could contain if it were trained on $m$ training
@@ -141,11 +143,14 @@ examples using the original maximum mutual information
 version of the algorithm?  Is it bigger, smaller, or the
 same as your answer to (b)?
 
-\answer{Your answer here}
+\answer{
+On average, the algorithm splits the training examples into two halves. So the average depth would be $O(log_2(m))$, which is shorter than those produced by random split.
+}
 
 \item (2 pts)How do you think this change (using random splits vs. maximum information mutual information splits) would affect the accuracy of the decision trees produced on average?  Why?
 
-\answer{Your answer here
+\answer{
+On average, maximum mutual information splits would yield decision trees with better validation accuracy but lower training accuracy. Because random split tend to split training data into small chunks of data, which makes the resulted models prone to overfitting.
 }
 
 \end{enumerate}
