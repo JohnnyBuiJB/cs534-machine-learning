@@ -1,0 +1,18 @@
+\begin{thebibliography}{HTF17}
+
+\bibitem[Bis06]{Bishop06}
+Christopher~M. Bishop.
+\newblock {\em Pattern Recognition and Machine Learning}.
+\newblock Springer, 2006.
+
+\bibitem[HTF17]{HasTibFri17}
+Trevor Hastie, Robert Tibshirani, and Jerome Friedman.
+\newblock {\em The Elements of Statistical Learning}.
+\newblock Springer, 2017.
+
+\bibitem[Mur22]{Murphy22}
+Kevin~Patrick Murphy.
+\newblock {\em Probabilistic Machine Learning, An Introduction}.
+\newblock The MIT Press, 2022.
+
+\end{thebibliography}

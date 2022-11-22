@@ -27,6 +27,7 @@
   linkcolor=blue,
   linkbordercolor={0 0 1}
 }
+\newcommand\mkbibcolor[2]{\textcolor{blue}{\hypersetup{citecolor=#1}#2}}
 
 \setlength{\parindent}{0.0in}
 \setlength{\parskip}{0.05in}
@@ -219,13 +220,74 @@ $L_2$ SVM?
 \chapter{NAIVE BAYES}
 
 %================================= CHAPTER ====================================%
-%================================= SECTION ====================================%
 \chapter{DECISION TREE}
-\section{Definition}
+%================================= SECTION ====================================%
+\section{Mutual Information}
+\textbf{Entropy}
+\begin{equation}\label{eqn:entropy}
+    H(X) = -\sum_{k=1}^{K} p(X=k) log_2 p(X=k)
+\end{equation}
+
+\textbf{Entropy for Binary Random Variable}
+\begin{equation}\label{eqn:binary_entropy}
+    H(X) = -p(X=1)log_2 p(X=1) - p(X=0)log_2 p(X=0)
+\end{equation}
+
+
+\textbf{Joint Entropy}
+\begin{equation}\label{eqn:joint_entropy}
+    H(X,Y) = -\sum_{x,y} p(x,y) log_2 p(x,y)
+\end{equation}
+
+\textbf{Conditional Entropy}
+
+\begin{equation}\label{eqn:cond_entropy}
+    H(Y|X) = H(X,Y) - H(X)
+    = -\sum_{x,y} p(x,y) log_2 p(x,y) -\sum_{x} p(x) log_2 \frac{1}{p(x)}
+\end{equation}
+
+or more general
+
+\begin{equation}\label{eqn:cond_entropy_general}
+    H((X_1,X_2,...,X_n)) = \sum_{i=1}^{n} H(X_i | X_1,...,X_{i-1})
+\end{equation}
+
+\eqref{eqn:cond_entropy}
+
+Mutual information tells us how similar two distributions are.
+
+\begin{equation}\label{eqn:mutual_information}
+    I(X,Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)
+\end{equation}
+
+\cite{Murphy22}, 6.3 \newline
+
+Notes from \cite{Murphy22}, 18 \newline
+\begin{itemize}
+    \item Multi-way split might cause \textbf{data fragmentation} (too little data might fall into each subtree), resulting in overfitting.
+    \item 
+    \item 
+\end{itemize}
+
+
+\cite{HasTibFri17}, 9.2 \newline
+
+%================================= CHAPTER ====================================%
+\chapter{Emsemble Methods}
+%================================= SECTION ====================================%
+\section{Bagging}
+refer to \cite{Murphy22}, chapter 18.3 Bagging. \newline
+%================================= SECTION ====================================%
+\section{Boosting}
+\cite{Bishop06}, 14.3 \newline
 
 %================================= CHAPTER ====================================%
 %================================= SECTION ====================================%
-\chapter{NEURAL NETWORKS}
+\chapter{Unsupervised Learning}
+\section{Clustering}
+For \textbf{Hierarchical Clustering}, refer to \cite{Murphy22}, chapter 21.2 Hierarchical clustering. \newline
+
+For \textbf{Flat Clustering}, refer to \cite{Murphy22}, chapter 21.3 K Means Clustering. \newline
 
 %================================= CHAPTER ====================================%
 %================================= SECTION ====================================%
@@ -243,8 +305,8 @@ $L_2$ SVM?
 
 
 %================================= CHAPTER ====================================%
-\bibliographystyle{acm}
-\bibliography{refs}
+\bibliographystyle{alpha}
+\bibliography{mybib}
 
 \end{document}
 
