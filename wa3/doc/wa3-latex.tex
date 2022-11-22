@@ -223,7 +223,35 @@ Observe that all of the leaf nodes are either pure or empty. This means that $H(
 
 \item (5 pts) Please show that in iteration $l$ of Adaboost, the weighted error of $h_l$ on the updated weights $D_{l+1}$ is exactly 50\%. In other words, $\sum_{i=1}^N D_{l+1}(i) I(h_l(X_i)\neq y_i) = 50\%$, where $I(\cdot)$ is the indicator function that takes value 1 if the argument is true. (Hint: start with the condition that, post update, the total weight of correct examples equals the total weight of in-correct examples, i.e., 50\% each.)
 
-\answer{Your answer here
+\answer{
+First, after the update, the total weight of incorrect examples equals 50\% of the total weights.
+
+$$
+\sum_{i=1}^N D_{l+1} (i) I(h_l(X_i) \neq y_i) = \frac{1}{2} \sum_{i=1}^N D_{l+1} (i) \tab[1cm] (4.1)
+$$
+
+Second, the weighted error of $h_l$ on the updated weights $D_{l+1}$ can be calculated as follows
+
+$$
+error(h_l, S, D_{l+1}) = 
+\frac{\sum_{i=1}^N D_{l+1}(i) I(h_l(X_i)\neq y_i)}{\sum_{i}^N D_{l+1}(i)}
+\stackrel{\text{(4.1)}}{=} \frac{1}{2}
+$$
+
+
+% $$
+% \leftrightarrow \sum_{i}^N D_{l} (i) e^{-\alpha_l} I(h_l(X_i) = y_i) = \sum_{i}^N D_{l} (i) e^{\alpha_l} I(h_l(X_i) \neq y_i)
+% $$
+
+% In case of misclassification, we update $D_{l+1} (i) = D_l (i) e^{\alpha_l}$ Plugging that to (4.1) above results in
+
+% $$
+% \sum_{i|h_l(i) \neq y_i} D_{l+1} (i) = \sum_{i|h_l(i) \neq y_i} D_{l} (i) e^{\alpha_l} \tab[1cm] (4.2)
+% $$
+
+
+
+
 }
 
 \item {\bf HAC}. (4pts) Create by hand the clustering dendrogram for the following samples of ten points in one dimension.
