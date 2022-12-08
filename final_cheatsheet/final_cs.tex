@@ -55,8 +55,8 @@
 %------------ General ML ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
-    \tiny{}
-    \tiny{} \begin{minipage}{0.31\textwidth}
+    
+     \begin{minipage}{0.31\textwidth}
         \textbf{Types of error}: 
         
         (1) modeling error caused by overly simple model. It happens when both training and validation acc are low.
@@ -76,7 +76,7 @@
 %------------ Decision Tree ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
+     \begin{minipage}{0.31\textwidth}
         \textbf{Entropy}: $H = -p_+log_2p_+ - p_-log_2p_-$
 
         \textbf{Information gain}: $H(r) - \sum_{i=1}^k p_i H(c_i)$, where r is root, c are chilren, and $p_i$ is the probability of samples going to the $i^{th}$ nodes
@@ -103,44 +103,10 @@
 
 \end{tikzpicture}
 
-
-%------------ Ensemble Methods ---------------
-\begin{tikzpicture}
-\node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
-        \textbf{Bagging}: derive many different training sets by sampling the original training set, and use them to train multiple models independently. The resulting models are then aggregated by voting mechanism (1) does not impact bias, but reduces variance (2) tends to work well with base classifiers that have low bias and high variance such as decision trees, neural networks (3) stable (low variance) classifiers (perceptron, logistic regression) do not draw much benefit from bagging (4) the ensemble tends to be smoother than individual models (5) robust to noise and outliers
-
-        \textbf{Random Forest}: (1) an extension of bagging, combine many high-variance and low-bias trees to create an ensemble of low variance (high confidence) by using data sample bagging and feature bagging (2) robust to noise and outliers (3) efficient for large dataset (4) can be used to estimate variable importance
-
-        \textbf{Boosting}: (1) contrast to bagging, instead of let the models learn independently, it forces the models to focus on different input space, hence make different errors. In particular, in each iteration, focus more on errors from previous classifiers and less on examples that are correct (weighted training). Each classifier is measured in terms of accuracy; more accurate classifier gets more weight in final voting. (2) often (not always) robust to overfitting (3) test error continues to decrease even after training error goes to zero (+4) can identify outliers since it focuses on samples that are hard to categorize (-5) too many outliers can degrade classification performance dramatically and increase time to convergence
-
-        \textbf{Bias Variance Decomposition} loss can be decomposed into three parts: bias, variance, and noise (irreducible error).
-        $$Err(x) = (E[\hat{f}(x)] - f(x))^2 + E[(\hat{f}(x) - E[\hat{f}(x)])^2] + \sigma_e^2$$
-
-        (1) Bias corresponds to modeling error. Models with high bias have too small hypothesis space, which can be fixed by using more complex hypothesis space.
-
-        (2) Variance corresponds to estimation error and possibly optimization error. It happens when the hypothesis space is very complex and the individual learned hypothesis has highly varying performance on different training set. This can be reduced by increasing the training set size
-
-        (3) Noise mainly corresponds to the bayes error, which is irreducible regardless of training data size and model complexity
-
-        \textbf{Q1}: adding more classifiers in a bagging ensemble does NOT increase the chance of overfitting because they learn independently from a bootstrapped sample of the training set.
-
-        \textbf{Q2}: adding more trees in a random forest will NOT increase the chance of overfitting because each tree is independently built using a bootstrapped sample. 
-        
-        \textbf{Q3}: adding more classifiers to a boosted ensemble will increase the chance of overfitting because boosting works like adding more classifiers to "patch holes" of previous classifiers. Overfitting could be obvious if we have outliers which boosting will focus on and overfit
-
-        \textbf{Q4}: (1) Bagging does not affect bias and reduces variance (2) Boosting reduces both bias (early stage) and variance (later stage) (3) Random forest (like bagging) primarily reduces variance (4) All three methods have no impacts on the noise portion
-    \end{minipage}
-};
-%------------ Ensemble Methods Header ---------------------
-\node[fancytitle, right=10pt] at (box.north west) {Ensemble Methods};
-
-\end{tikzpicture}
-
 %------------ Clustering ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
+     \begin{minipage}{0.31\textwidth}
         \textbf{Hierarchical Clustering}: there are 2 approaches, bottom up (agglomerative) and top down (divisive)
 
         \textbf{Hierarchical Agglomerative Clustering}: starts with each sample in a separate cluster, then merge the pair of clusters that have the smallest "distance" until there is only one cluster left.
@@ -164,13 +130,29 @@
 };
 %------------ Clustering Header ---------------------
 \node[fancytitle, right=10pt] at (box.north west) {Clustering};
+\end{tikzpicture}
 
+%------------ Dimensionality Reduction ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+     \begin{minipage}{0.31\textwidth}
+        \textbf{Supervised Dimension Reduction}: Linear Disciminant Analysis (LDA): (1) find a projection to maximize the distances between the means (distances between clusters) and (2) minimize the "scatters" (distances between points within one cluster) (3) can be viewed as a generative classifier p(x|y): Gaussian with distinct $\mu$ for each class but a shared $\sigma$
+
+        \textbf{Unsupervised Dimension Reduction}:
+        (1) \textit{Projection}: Principal Components (PCA), and (2) \textit{Manifold Learning}: t-Distributed Stochastic Neighbor Embedding (t-SNE) and ISOMAP
+
+        \textbf{Motivation}: (1) help visualize and interpret high dimensional data (2) remove noise/irrelevant features $\rightarrow$ reduce computational cost, overfitting, and increase efficiency
+    
+    \end{minipage}
+};
+%------------ Dimensionality Reduction Header ---------------------
+\node[fancytitle, right=10pt] at (box.north west) {Dimensionality Reduction};
 \end{tikzpicture}
 
 %------------ K-means ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
+     \begin{minipage}{0.31\textwidth}
         Assume that all clusters have the same shape (same distribution)???
 
         \textbf{Objective}: minimize the distances from the points to the centroids of their clusters
@@ -198,10 +180,27 @@
 \node[fancytitle, right=10pt] at (box.north west) {K-means};
 \end{tikzpicture}
 
+%------------ PCA ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+     \begin{minipage}{0.31\textwidth}
+    \textbf{Idea}: (1) identifies the hyperplane that lies "closest" to the data, (2) \underline{projects} the data onto it.
+
+    \textbf{Objective}: (1) maximizes variance (most likely lose less information) or (2) minimizes the mean squared distance between the original dataset and its projection
+
+    \textbf{Notes}: (1) PCA assumes the dataset is centered around the origin, (2) choose the number of dimensions that add up to some percentage  of the variance (often at least 95\%) of the original dataset. (3) linear 
+
+    \textbf{Q1}: top component directions do not guarantee to provide the best separation for classification. Because these components are chosen to maximize the projected variance and some important features for classification may have low variance, and therefore are diminished
+    \end{minipage}
+};
+%------------ PCA Header ---------------------
+\node[fancytitle, right=10pt] at (box.north west) {PCA};
+\end{tikzpicture}
+
 %------------ Expectation Maximization ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
+     \begin{minipage}{0.31\textwidth}
         \textbf{}
         \textbf{} (1) start with an initial guess of the model parameters (2) given the current parameters $\lambda_t$, compute the expectation for the hidden data (3) re-estimate the parameters $\lambda_{t+1}$
 
@@ -231,8 +230,8 @@
 %------------ Buffer ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
-        1\\2\\3
+     \begin{minipage}{0.31\textwidth}
+        1\\2\\3\\4\\5\\6\\7\\8
 
     \end{minipage}
 };
@@ -241,44 +240,10 @@
 \end{tikzpicture}
 
 
-%------------ Dimensionality Reduction ---------------
+s%------------ ISOMAP ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
-        \textbf{Supervised Dimension Reduction}: Linear Disciminant Analysis (LDA): (1) find a projection to maximize the distances between the means (distances between clusters) and (2) minimize the "scatters" (distances between points within one cluster) (3) can be viewed as a generative classifier p(x|y): Gaussian with distinct $\mu$ for each class but a shared $\sigma$
-
-        \textbf{Unsupervised Dimension Reduction}:
-        (1) \textit{Projection}: Principal Components (PCA), and (2) \textit{Manifold Learning}: t-Distributed Stochastic Neighbor Embedding (t-SNE) and ISOMAP
-
-        \textbf{Motivation}: (1) help visualize and interpret high dimensional data (2) remove noise/irrelevant features $\rightarrow$ reduce computational cost, overfitting, and increase efficiency
-    
-    \end{minipage}
-};
-%------------ Dimensionality Reduction Header ---------------------
-\node[fancytitle, right=10pt] at (box.north west) {Dimensionality Reduction};
-\end{tikzpicture}
-
-%------------ PCA ---------------
-\begin{tikzpicture}
-\node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
-    \textbf{Idea}: (1) identifies the hyperplane that lies "closest" to the data, (2) \underline{projects} the data onto it.
-
-    \textbf{Objective}: (1) maximizes variance (most likely lose less information) or (2) minimizes the mean squared distance between the original dataset and its projection
-
-    \textbf{Notes}: (1) PCA assumes the dataset is centered around the origin, (2) choose the number of dimensions that add up to some percentage  of the variance (often at least 95\%) of the original dataset. (3) linear 
-
-    \textbf{Q1}: top component directions do not guarantee to provide the best separation for classification. Because these components are chosen to maximize the projected variance and some important features for classification may have low variance, and therefore are diminished
-    \end{minipage}
-};
-%------------ PCA Header ---------------------
-\node[fancytitle, right=10pt] at (box.north west) {PCA};
-\end{tikzpicture}
-
-%------------ ISOMAP ---------------
-\begin{tikzpicture}
-\node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
+     \begin{minipage}{0.31\textwidth}
         \textbf{Observation}: data often lies on a near or nonlinear low-dimensional curve, which is called manifolds
         
         \textbf{Notes}: (1) nonlinear (2) preserve the global, nonlinear geometry of the data by preserving the geodesic distances (3) sensitive to the construction of graph, too few neighbors $\rightarrow$ the graph might not have sufficient edges, too many neighbors $\rightarrow$ might connect points that shouldn't be (4) A general strategy is to try different parameters for graph construction and visualize the results
@@ -293,7 +258,7 @@
 %------------ t-SNE ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
+     \begin{minipage}{0.31\textwidth}
         \textbf{Idea}: converts similarities between data points to joint probabilities and tries to minimize the Kullback-Leibler divergence between the joint probabilities of the low-dimensional embedding and the high-dimensional data.
 
         \textbf{Properties}: (1) preserve local structure (2) 
@@ -322,7 +287,7 @@
 %------------ Neural Network ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
+     \begin{minipage}{0.31\textwidth}
         \textbf{Activation Functions}: (1) Sigmoid function $\sigma(x) = \frac{1}{1 + e^{-x}}$, (2) Tanh function $tanh(x) = 2\sigma(2x) - 1$, (3) Rectified Linear Unit (ReLu) function $f(x) = max(0,x)$ (4) perceptron f(x) = 1 if $w.x + b > 0$, otherwise f(x) = 0.
 
         \textbf{Representation Power}: 
@@ -361,13 +326,48 @@
 %------------ Mixture of Gaussian ---------------
 \begin{tikzpicture}
 \node [mybox] (box){%
-    \tiny{} \begin{minipage}{0.31\textwidth}
+     \begin{minipage}{0.31\textwidth}
+        *\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\*\\
     \end{minipage}
 };
 %------------ Mixture of Gaussian Header ---------------------
 \node[fancytitle, right=10pt] at (box.north west) {Mixture of Gaussian};
 \end{tikzpicture}
 
+%------------ Ensemble Methods ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+     \begin{minipage}{0.31\textwidth}
+        \textbf{Bagging}: derive many different training sets by sampling the original training set, and use them to train multiple models independently. The resulting models are then aggregated by voting mechanism (1) does not impact bias, but reduces variance (2) tends to work well with base classifiers that have low bias and high variance such as decision trees, neural networks (3) stable (low variance) classifiers (perceptron, logistic regression) do not draw much benefit from bagging (4) the ensemble tends to be smoother than individual models (5) robust to noise and outliers
+
+        \textbf{Random Forest}: (1) an extension of bagging, combine many high-variance and low-bias trees to create an ensemble of low variance (high confidence) by using data sample bagging and feature bagging (2) robust to noise and outliers (3) efficient for large dataset (4) can be used to estimate variable importance
+
+        \textbf{Boosting}: (1) contrast to bagging, instead of let the models learn independently, it forces the models to focus on different input space, hence make different errors. In particular, in each iteration, focus more on errors from previous classifiers and less on examples that are correct (weighted training). Each classifier is measured in terms of accuracy; more accurate classifier gets more weight in final voting. (2) often (not always) robust to overfitting (3) test error continues to decrease even after training error goes to zero (+4) can identify outliers since it focuses on samples that are hard to categorize (-5) too many outliers can degrade classification performance dramatically and increase time to convergence
+
+        \textbf{Bias Variance Decomposition} loss can be decomposed into three parts: bias, variance, and noise (irreducible error).
+        $$Err(x) = (E[\hat{f}(x)] - f(x))^2 + E[(\hat{f}(x) - E[\hat{f}(x)])^2] + \sigma_e^2$$
+
+        (1) Bias corresponds to modeling error. Models with high bias have too small hypothesis space, which can be fixed by using more complex hypothesis space.
+
+        (2) Variance corresponds to estimation error and possibly optimization error. It happens when the hypothesis space is very complex and the individual learned hypothesis has highly varying performance on different training set. This can be reduced by increasing the training set size
+
+        (3) Noise mainly corresponds to the bayes error, which is irreducible regardless of training data size and model complexity
+
+        \textbf{Q1}: adding more classifiers in a bagging ensemble does NOT increase the chance of overfitting because they learn independently from a bootstrapped sample of the training set.
+
+        \textbf{Q2}: adding more trees in a random forest will NOT increase the chance of overfitting because each tree is independently built using a bootstrapped sample. 
+        
+        \textbf{Q3}: adding more classifiers to a boosted ensemble will increase the chance of overfitting because boosting works like adding more classifiers to "patch holes" of previous classifiers. Overfitting could be obvious if we have outliers which boosting will focus on and overfit
+
+        \textbf{Q4}: (1) Bagging does not affect bias and reduces variance (2) Boosting reduces both bias (early stage) and variance (later stage) (3) Random forest (like bagging) primarily reduces variance (4) All three methods have no impacts on the noise portion
+        
+        \textbf{Q5}: Adaboost with decision tree as base learner is the most sensitive to outliers
+        
+    \end{minipage}
+};
+%------------ Ensemble Methods Header ---------------------
+\node[fancytitle, right=10pt] at (box.north west) {Ensemble Methods};
+\end{tikzpicture}
 
 \end{multicols*}
 \end{document}
