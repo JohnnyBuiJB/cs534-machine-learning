@@ -289,15 +289,34 @@ For \textbf{Hierarchical Clustering}, refer to \cite{Murphy22}, chapter 21.2 Hie
 
 For \textbf{Flat Clustering}, refer to \cite{Murphy22}, chapter 21.3 K Means Clustering. \newline
 
-%================================= CHAPTER ====================================%
-%================================= SECTION ====================================%
 
-%================================= CHAPTER ====================================%
-%================================= SECTION ====================================%
+%==============================================================================%
+\chapter{Dimensionality Reduction}
 
+%------------------------------------------------------------------------------%
+\section{Motivation}
+Many problems involve a huge number of features, which make the training more expensive and make it harder to search for a good solution. This problem is known as the \textit{curse of dimensionality}. Oftentimes, reducing the number of features can 
 
+\begin{itemize}
+    \item speed up training
+    \item filter out noise and unnecessary details, thus result in higher performance models.
+    \item useful for data visualization
+\end{itemize}
 
+Furthermore, in high-dimensional data sets, data points are likely to be far from each other (sparse), and new data point will also be far from training data points, which makes prediction less reliable than in lower dimensions. In other words, models trained on higher dimension data sets are prone to overfitting \cite{Geron19}.
 
+%------------------------------------------------------------------------------%
+\section{Prerequisite}
+Linear Algebra: Eigenvectors
+Statistics: covariance
+
+%------------------------------------------------------------------------------%
+\section{Approaches}
+There are two main approaches to reducing dimensionality: Projection and Manifold Learning.
+
+\subsection{Projection}
+
+\subsection{Manifold Learning}
 
 
 
