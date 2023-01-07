@@ -134,7 +134,6 @@ dmypy.json
 *.fls
 *.out
 *.fdb_latexmk
-*.pdf
 *.gz
 *.toc
 
